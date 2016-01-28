@@ -1,0 +1,66 @@
+This is the demo code for Williams Hill written by David Harvey, Widepoint Computer Services Ltd
+
+It is structured as a standard simple maven project. 
+
+To build the code after the zip file has been 
+unzipped navigate to the root directory and issue the standard command
+
+mvn install 
+
+To just run the unit tests type the command
+
+mvn test
+
+This code has been tested on windows using the following JDK
+
+java version "1.8.0_66"
+Java(TM) SE Runtime Environment (build 1.8.0_66-b18)
+Java HotSpot(TM) 64-Bit Server VM (build 25.66-b18, mixed mode)
+
+The code could also be imported into Eclipse as an existing maven project.
+
+A batch file search.bat is provided in the root direct to allow the program to be run. This
+includes the jar file built by maven (williamshill-0.0.1-SNAPSHOT.jar) on the class path and
+invokes the entry level main class co.uk.widepoint.filesearch.FileSearcher
+
+The default version of the script supports regex matching and can be invoked from the command line as follows:
+
+search.bat -f filenamePattern [ -p contentPattern ] directory
+
+The -p contentPattern part is optional. 
+
+In this version of the program the order of parameters is not optional - they must be specified in the order shown above.
+
+From the unzipped archive the following invocations of
+the search.bat script from the root directory should return the following results:
+
+search.bat -f "pom\.xml"  .
+	.\pom.xml
+	.\target\classes\META-INF\maven\co.uk.widepoint\williamshill\pom.xml
+
+search.bat -f "Regex.*\.java" "src/test"
+	src\test\java\co\uk\widepoint\filesearch\io\RegexContentSearchDirectoryWalkerTest.java
+	src\test\java\co\uk\widepoint\filesearch\io\RegexFileSearchDirectoryWalkerTest.java
+	
+search.bat -f "Regex.*\.java" -p ".*[Cc]ontentS[a-z]arch.*" "src/test"
+	src\test\java\co\uk\widepoint\filesearch\io\RegexContentSearchDirectoryWalkerTest.java
+
+
+It's possible to switch off regex matching by supplying the java system parameter 
+-Dregex.supported=false at runtime. The script search_noregex.bat is supplied which includes
+that parameter. 
+
+Haven't had time to refactor to support easy addition of more options but that would tie
+in with one of the additional jars I would consider using which would be 
+Apache Commons CLI
+
+Other libraries that I would have used if allowed would be slf4j and log4j for debug logging. 
+
+Haven't found the need to use a mocking library for this code but by choice tend to use Mockito and if required PowereMock. 
+
+
+
+ 
+ 
+
+
